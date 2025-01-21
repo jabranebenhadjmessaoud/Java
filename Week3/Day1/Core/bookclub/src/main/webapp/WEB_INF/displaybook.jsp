@@ -22,12 +22,14 @@
 <a href="/books" class="btn btn-outline-success">Back to the shelves</a>
 </div>
 
-<h2> <c:out value="${book.getCreator().getUserName()}" ></c:out> read  <c:out value="${book.title}" ></c:out> by <c:out value="${book.author}" ></c:out> </h2>
+<h2> <strong style="color:red"> <c:out value="${book.getCreator().getUserName()}" ></c:out></strong>  read  <strong style="color:purple"><c:out value="${book.title}" ></c:out></strong> by <strong style="color:green" ><c:out value="${book.author}" ></c:out></strong> </h2>
 
+<h3>Here are <c:out value="${book.getCreator().getUserName()}" ></c:out>'s thoughts : </h3>
+<hr/>
 <fieldset>
-	<c:out value="${book.thoughts}"></c:out>
+	<p><c:out value="${book.thoughts}"></c:out></p> 
 </fieldset>
-
+<hr/>
 <div class="d-flex justify-items-center mt-4">
 	<c:if test="${book.getCreator().getId().equals(user.getId()) }">
 	<a href="/edit/${book.id }" class="btn btn-warning">Edit</a>
@@ -35,7 +37,16 @@
 	<c:if test="${!book.getCreator().getId().equals(user.getId()) }">
 	<button disabled class="btn btn-warning">Edit</button>
 	</c:if>
+	
+	<c:if test="${book.getCreator().getId().equals(user.getId()) }">
 	<a href="/delete/${book.id}" class="btn btn-danger">delete</a>
+	</c:if>
+	<c:if test="${!book.getCreator().getId().equals(user.getId()) }">
+	<button disabled class="btn btn-danger">Delete</button>
+	</c:if>
+	
+	
+	
 </div>
 
 </body>

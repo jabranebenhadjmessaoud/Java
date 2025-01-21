@@ -35,7 +35,7 @@ public class BookController {
 		return "createbook";
 	}
 	
-	// post create song 
+	//  create book 
 	@PostMapping("/addbook")
 	public String create(@Valid @ModelAttribute("book")Book book,
 				         BindingResult result,
@@ -47,7 +47,7 @@ public class BookController {
 		}
 		// we will get the connected user
 		User connectedUser = userServ.findById((Long) session.getAttribute("userId"));
-		//set the creator of the song 
+		//set the creator of the book
 		book.setCreator(connectedUser);
 		System.out.println(connectedUser);
 		System.out.println(book);
@@ -74,9 +74,9 @@ public class BookController {
 	public String getEditPage(@PathVariable("bookId")Long bookId,
 					          Model model) {
 				
-		// we will get the song using the id 
+		// we will get the book using the id 
 		Book book=bookserv.findById(bookId);
-		//set the song to the model attribute 
+		//set the book to the model attribute 
 		model.addAttribute("book",book);
 		System.out.print("From get edit page"+book.getCreator());
 		//return edit page
@@ -85,13 +85,16 @@ public class BookController {
 	
 	// Post Edit
 	@PutMapping("/edit/{bookId}")
-	public String editSong(@Valid @ModelAttribute("book")Book book,
+	public String editBook(@Valid @ModelAttribute("book")Book book,
 							BindingResult result,
 					       @PathVariable("bookId")Long bookId,
-					      HttpSession session) {
+					      HttpSession session,
+					      Model model) {
 		if(result.hasErrors()) {
+			book.setId(bookId) ;
+			model.addAttribute("book",book);
 			System.out.println(result.getAllErrors());
-			return "edit";
+			return "editbook";    
 		}	   
 		System.out.print(book.getCreator());
 		book.setCreator(userServ.findById((Long) session.getAttribute("userId")));
@@ -99,7 +102,7 @@ public class BookController {
 		return "redirect:/books";
 				
 		}
-	
+	    
 	// delete a Book
 		@GetMapping("/delete/{bookId}")
 		public String deleteBook(@PathVariable("bookId") Long bookId) {

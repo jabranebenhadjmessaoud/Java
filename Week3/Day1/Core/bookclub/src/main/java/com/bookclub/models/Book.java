@@ -39,7 +39,7 @@ public class Book {
 	
 	// Book Thoughts
 	@NotNull(message="Author Name is required!")
-	@Size(min=3, max=30, message="title must be between 3 and 30 characters")
+	@Size(min=3, message="title must be more than 3 characters")
 	private String thoughts;
 	
 	// Posted By 
